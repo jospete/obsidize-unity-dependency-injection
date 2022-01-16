@@ -64,8 +64,9 @@ public class Consumer : MonoBehaviour
 		_injectionContext = new BehaviourInjectionContext(this)
 			.Inject<TokenAType>(v => _tokenA = v)
 			.Inject<TokenBType>(v => _tokenB = v, 10f) // can also pass a custom max-wait-time before the DI system will complain
-			.InjectOptional<TokenBType>(v => _tokenB = v) // will not complain if no token is provided
-			.Inject<TokenDType>(OnUpdateTokenD);
+			.InjectOptional<TokenCType>(v => _tokenC = v) // will not complain if no token is provided
+			.Inject<TokenDType>(OnUpdateTokenD)
+			.Inject<TokenDType>(OnUpdateTokenD); // !!! ERROR !!! - TokenDType already being consumed by this context (from previous line)
 	}
 	
 	private void OnDestroy()
