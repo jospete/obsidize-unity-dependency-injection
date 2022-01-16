@@ -55,7 +55,7 @@ using UnityEngine;
 public class Consumer : MonoBehaviour
 {
 	
-	private readonly BehaviourInjectionContext _injectionContext;
+	private BehaviourInjectionContext _injectionContext;
 	private TokenAType _tokenA;
 	private TokenBType _tokenB;
 	private TokenCType _tokenC;
