@@ -21,7 +21,7 @@ namespace Obsidize.DependencyInjection.Testing.Editor
 		[Test]
 		public void BlowsUpWhenGivenABadReigstryReference()
 		{
-			Assert.Throws<NullReferenceException>(() => new Injector(null));
+			Assert.Throws<ArgumentNullException>(() => new Injector(null));
 		}
 
 		[Test]
