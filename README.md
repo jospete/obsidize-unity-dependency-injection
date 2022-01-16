@@ -15,6 +15,7 @@ The main benefits of this module are:
 5. Elimination of dependency creation racing conditions (i.e. module A needs module B, but module A was created before module B)
 6. Allows for runtime token reference hot-swapping (i.e. overwriting a token value will update all watchers)
 7. Independent sub-system operation - systems don't know when (or if) a token will be provided, and must operate in isolation with this in mind (their default behaviour should be to do "nothing" instead of explode on reference error)
+8. Allows for true prefab isolation by eliminating shared scene references from the inspector
 
 TL;DR:
 

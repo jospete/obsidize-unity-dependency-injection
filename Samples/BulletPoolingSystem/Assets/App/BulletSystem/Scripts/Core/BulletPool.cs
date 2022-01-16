@@ -10,12 +10,17 @@ namespace BulletPoolingExample.BulletSystem
 	/// 
 	/// Note: this uses a custom-rolled pooling system for the sake of clarity,
 	/// but ideally you should use unity's 2021+ ObjectPool system instead.
+	/// 
+	/// Tip: try deleting the scene instance, and then re-inserting it.
+	/// You will notice that the Player script re-binds to the new instance 
+	/// automatically since it is using a Watch() listener (Huzzah!)
 	/// </summary>
 	[DisallowMultipleComponent]
 	public class BulletPool : InjectionTokenSource<IBulletPool>, IBulletPool
 	{
 
 		[SerializeField] private Bullet _bulletPrefab;
+		[SerializeField] private int _maxInstances = 25;
 
 		private readonly List<Bullet> _instances = new List<Bullet>();
 		private readonly Stack<Bullet> _available = new Stack<Bullet>();
@@ -32,6 +37,11 @@ namespace BulletPoolingExample.BulletSystem
 		{
 			base.OnDestroy();
 			DestroyBullets();
+		}
+
+		private void OnValidate()
+		{
+			_maxInstances = Mathf.Max(1, _maxInstances);
 		}
 
 		public IBullet GetBullet()
@@ -53,7 +63,7 @@ namespace BulletPoolingExample.BulletSystem
 		private void InstantiateBullets()
 		{
 
-			for (int i = 0; i < 25; i++)
+			for (int i = 0; i < _maxInstances; i++)
 			{
 
 				// Note: we don't attach the bullet as a child of this
