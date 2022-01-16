@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.2
+
+- Documentation updates
+- Add better customization options to BehaviourInjectionContext
+
 ## 1.1.1
 
 - Fix package version
