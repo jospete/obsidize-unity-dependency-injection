@@ -15,11 +15,18 @@ namespace Obsidize.DependencyInjection
 		private readonly Dictionary<Type, IInjectionTokenProvider> _providers = new Dictionary<Type, IInjectionTokenProvider>();
 		private bool _disposed = false;
 
-		public T GetTokenValue<T>() => ForType<T>().TokenValue;
-		public void AddTokenListener<T>(Action<T> onInject) => ForType<T>().AddListener(onInject);
-		public void RemoveTokenListener<T>(Action<T> onInject) => ForType<T>().RemoveListener(onInject);
 		public bool Contains(IInjectionTokenProvider injector) => injector != null && _providers.ContainsKey(injector.TokenType);
 		public bool TryGetProvider(Type type, out IInjectionTokenProvider provider) => _providers.TryGetValue(type, out provider);
+
+		private void Remove(IInjectionTokenProvider provider)
+		{
+
+			if (provider != null)
+			{
+				OnProviderRemove?.Invoke(provider);
+				_providers.Remove(provider.TokenType);
+			}
+		}
 
 		public void Dispose()
 		{
@@ -54,7 +61,7 @@ namespace Obsidize.DependencyInjection
 			_providers.Clear();
 		}
 
-		public InjectionTokenProvider<T> ForType<T>()
+		public InjectionTokenProvider<T> ForType<T>() where T : class
 		{
 
 			if (_disposed)
@@ -76,16 +83,6 @@ namespace Obsidize.DependencyInjection
 			}
 
 			return result as InjectionTokenProvider<T>;
-		}
-
-		private void Remove(IInjectionTokenProvider provider)
-		{
-
-			if (provider != null)
-			{
-				OnProviderRemove?.Invoke(provider);
-				_providers.Remove(provider.TokenType);
-			}
 		}
 	}
 }

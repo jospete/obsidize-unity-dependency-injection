@@ -22,21 +22,23 @@ namespace BulletPoolingExample.BulletSystem
 		[SerializeField] private float _lifetime = 3f;
 		[SerializeField] private float _speed = 15f;
 
+		private BehaviourInjectionContext _injectionContext;
+		private IPlayer _player;
 		private Rigidbody _physicsBody;
 		private float _lifetimeRemaining;
-		private IPlayer _player;
 
 		public Action<Bullet> onRelease;
 
 		private void Awake()
 		{
 			_physicsBody = GetComponent<Rigidbody>();
-			Injector.Main.RequireAndWatch<IPlayer>(OnUpdatePlayer);
+			_injectionContext = new BehaviourInjectionContext(this)
+				.Inject<IPlayer>(v => _player = v);
 		}
 
 		private void OnDestroy()
 		{
-			Injector.Main.Unwatch<IPlayer>(OnUpdatePlayer);
+			_injectionContext.Dispose();
 		}
 
 		private void OnValidate()
@@ -59,11 +61,6 @@ namespace BulletPoolingExample.BulletSystem
 			{
 				onRelease?.Invoke(this);
 			}
-		}
-
-		private void OnUpdatePlayer(IPlayer player)
-		{
-			_player = player;
 		}
 
 		public void Launch()

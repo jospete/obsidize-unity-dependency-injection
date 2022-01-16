@@ -2,7 +2,6 @@ using BulletPoolingExample.BridgeInterfaces;
 using Obsidize.DependencyInjection;
 using UnityEngine;
 
-
 namespace BulletPoolingExample.Entities.Player
 {
 	/// <summary>
@@ -19,28 +18,28 @@ namespace BulletPoolingExample.Entities.Player
 
 		[SerializeField] private Transform _bulletStart;
 
-		private IBulletPool _bulletPool;
-
 		public Vector3 BulletStartPosition => _bulletStart.position;
 		public Vector3 AimDirection => BulletStartPosition - transform.position;
 
-		protected override IPlayer GetInjectionTokenValue() => this;
+		private BehaviourInjectionContext _injectionContext;
+		private IBulletPool _bulletPool;
 
 		protected override void Awake()
 		{
-			Injector.Main.RequireAndWatch<IBulletPool>(OnBulletPoolUpdate);
 			base.Awake();
+			_injectionContext = new BehaviourInjectionContext(this)
+				.Inject<IBulletPool>(OnUpdateBulletPool);
+		}
+
+		private void OnUpdateBulletPool(IBulletPool v)
+		{
+			_bulletPool = v;
 		}
 
 		protected override void OnDestroy()
 		{
-			Injector.Main.Unwatch<IBulletPool>(OnBulletPoolUpdate);
 			base.OnDestroy();
-		}
-
-		private void OnBulletPoolUpdate(IBulletPool pool)
-		{
-			_bulletPool = pool;
+			_injectionContext.Dispose();
 		}
 
 		private void Update()

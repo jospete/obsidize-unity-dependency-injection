@@ -10,6 +10,7 @@ namespace Obsidize.DependencyInjection
 	/// </summary>
 	/// <typeparam name="T">The type of token that will be provided</typeparam>
 	public class InjectionTokenProvider<T> : IInjectionTokenProvider, IDisposable
+		where T : class
 	{
 
 		private event Action<T> OnProvision;
@@ -20,11 +21,26 @@ namespace Obsidize.DependencyInjection
 		public Type TokenType => typeof(T);
 		public bool HasToken => _token != null;
 		public int ListenerCount => OnProvision?.GetInvocationList()?.Length ?? 0;
-		public T TokenValue => HasToken ? _token.Value : default(T);
+		public T TokenValue => _token?.Value ?? default;
+
+		private void HandleTokenDispose()
+		{
+			_token = null;
+		}
 
 		public override string ToString()
 		{
 			return $"InjectionTokenProvider<{TokenType.Name}> [Token = {_token?.ToString() ?? "null"}]";
+		}
+
+		public bool ProvideValue(T value)
+		{
+			return Provide(new InjectionToken<T>(value));
+		}
+
+		public bool ProvideValueWithOverwrite(T value)
+		{
+			return ProvideWithOverwrite(new InjectionToken<T>(value));
 		}
 
 		public bool ProvideWithOverwrite(InjectionToken<T> token)
@@ -111,11 +127,6 @@ namespace Obsidize.DependencyInjection
 			);
 
 			return false;
-		}
-
-		private void HandleTokenDispose()
-		{
-			_token = null;
 		}
 	}
 }

@@ -61,21 +61,6 @@ namespace Obsidize.DependencyInjection.Testing.Editor
 		}
 
 		[Test]
-		public void CanUseTheRegistryShorthandForAddingATokenListener()
-		{
-
-			TestTokenValue value = null;
-			var registry = new InjectionTokenProviderRegistry();
-
-			registry.AddTokenListener<TestTokenValue>(injected => value = injected);
-			Assert.AreEqual(null, value);
-
-			var providedTokenValue = new TestTokenValue();
-			registry.ForType<TestTokenValue>().Provide(new InjectionToken<TestTokenValue>(providedTokenValue));
-			Assert.AreEqual(providedTokenValue, value);
-		}
-
-		[Test]
 		public void OnlyInstantiatesOneInjectorPerType()
 		{
 

@@ -7,13 +7,14 @@ namespace Obsidize.DependencyInjection
 	/// </summary>
 	/// <typeparam name="T">The type of token that will be provided by this behaviour</typeparam>
 	public abstract class InjectionTokenSource<T> : MonoBehaviour
+		where T : class
 	{
 
 		protected virtual bool DestroyOnProvisionFailure => true;
 		protected virtual bool LogProvisioningLifeCylce => false;
 		protected InjectionTokenProvider<T> Provider => Injector.Main.GetProvider<T>();
 
-		protected abstract T GetInjectionTokenValue();
+		protected virtual T GetInjectionTokenValue() => this as T;
 
 		protected virtual void Awake()
 		{

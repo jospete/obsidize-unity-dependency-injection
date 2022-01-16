@@ -38,9 +38,53 @@ Simply paste the repo url into the package manager "add" menu and unity will do 
 
 ## Usage
 
+The below examples are pseudo-code for core concepts.
+
 See the project samples for working code examples.
 
-## Token Sources
+### Token Consumer Usage
+
+For behaviours that want to use DI to get references, the easiest way is with an ```BehaviourInjectionContext``` instance:
+
+```csharp
+using Obsidize.DependencyInjection;
+using UnityEngine;
+
+// Note that only one Inject / InjectionListener attribute should be used per type.
+// Otherwise, you will register multiple listeners on this class for the same value type.
+public class Consumer : MonoBehaviour
+{
+	
+	private readonly BehaviourInjectionContext _injectionContext;
+	private TokenAType _tokenA;
+	private TokenBType _tokenB;
+	private TokenCType _tokenC;
+	private TokenDType _tokenD;
+	
+	private void Awake()
+	{
+		_injectionContext = new BehaviourInjectionContext(this)
+			.Inject<TokenAType>(v => _tokenA = v)
+			.Inject<TokenBType>(v => _tokenB = v, 10f) // can also pass a custom max-wait-time before the DI system will complain
+			.InjectOptional<TokenBType>(v => _tokenB = v) // will not complain if no token is provided
+			.Inject<TokenDType>(OnUpdateTokenD);
+	}
+	
+	private void OnDestroy()
+	{
+		// Be sure to dispose the context when you're done with it to avoid memory leaks
+		_injectionContext.Dispose();
+	}
+	
+	private void OnUpdateTokenD(TokenDType value)
+	{
+		_tokenD = value;
+		// do other stuff now that _tokenD is updated...
+	}
+}
+```
+
+### Token Source Usage
 
 For custom non-behaviour tokens, extend ```InjectionTokenSource```:
 
@@ -62,6 +106,7 @@ public class CustomTokenProvider : InjectionTokenSource<MyCustomTokenType>, MyCu
 
 	public int SomeData => _someData;
 	
+	// Optional override - defaults to casting the sub-class as the token
 	protected override MyCustomTokenType GetInjectionTokenValue() => this;
 
 	public void DoTheThing()

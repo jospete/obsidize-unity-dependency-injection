@@ -6,8 +6,9 @@ namespace Obsidize.DependencyInjection
 	/// Tracker for the state of a provided token.
 	/// Tokens can be disposed of by either the injector or the provider.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The value type that this token supplies</typeparam>
 	public class InjectionToken<T> : IDisposable
+		where T : class
 	{
 
 		public event Action OnDispose;
@@ -18,7 +19,7 @@ namespace Obsidize.DependencyInjection
 
 		public InjectionToken(Func<T> tokenFactory)
 		{
-			_tokenFactory = tokenFactory ?? throw new NullReferenceException(nameof(tokenFactory));
+			_tokenFactory = tokenFactory ?? throw new ArgumentNullException(nameof(tokenFactory));
 		}
 
 		public InjectionToken(T value) : this(() => value)

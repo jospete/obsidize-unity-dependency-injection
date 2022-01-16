@@ -25,12 +25,10 @@ namespace BulletPoolingExample.BulletSystem
 		private readonly List<Bullet> _instances = new List<Bullet>();
 		private readonly Stack<Bullet> _available = new Stack<Bullet>();
 
-		protected override IBulletPool GetInjectionTokenValue() => this;
-
 		protected override void Awake()
 		{
-			InstantiateBullets();
 			base.Awake();
+			InstantiateBullets();
 		}
 
 		protected override void OnDestroy()

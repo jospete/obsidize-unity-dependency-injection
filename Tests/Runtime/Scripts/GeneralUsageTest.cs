@@ -20,21 +20,18 @@ namespace Obsidize.DependencyInjection.Testing.Runtime
 		class TestConsumer : MonoBehaviour
 		{
 
+			private BehaviourInjectionContext _injectionContext;
 			public SingletonProviderTest singletonInstance;
 
 			private void Awake()
 			{
-				Injector.Main.RequireAndWatch<SingletonProviderTest>(OnSingletonProvided);
+				_injectionContext = new BehaviourInjectionContext(this)
+					.Inject<SingletonProviderTest>(v => singletonInstance = v);
 			}
 
 			private void OnDestroy()
 			{
-				Injector.Main.Unwatch<SingletonProviderTest>(OnSingletonProvided);
-			}
-
-			private void OnSingletonProvided(SingletonProviderTest instance)
-			{
-				singletonInstance = instance;
+				_injectionContext.Dispose();
 			}
 		}
 
