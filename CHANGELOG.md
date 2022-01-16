@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+- Fix package version
+
 ## 1.1.0
 
 - Add new concepts: InjectionTokenWatcher, BehaviourInjectionContext
