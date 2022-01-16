@@ -1,0 +1,33 @@
+{
+	"name": "com.obsidize.unity.dependency-injection",
+	"version": "1.0.0",
+	"displayName": "Dependency Injection",
+	"description": "Utilities for enhanced unity app control flow via DI tokens",
+	"unity": "2019.4",
+	"documentationUrl": "https://github.com/jospete/obsidize-unity-dependency-injection/blob/master/README.md",
+	"changelogUrl": "https://github.com/jospete/obsidize-unity-dependency-injection/blob/master/CHANGELOG.md",
+	"licensesUrl": "https://github.com/jospete/obsidize-unity-dependency-injection/blob/master/LICENSE.md",
+	"license": "MIT",
+	"author": {
+		"name": "Obsidize Tools",
+		"email": "obsidize@gmail.com",
+		"url": "https://github.com/jospete"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jospete/obsidize-unity-dependency-injection.git"
+	},
+	"keywords": [
+		"tools",
+		"dependency",
+		"injection",
+		"di"
+	],
+	"samples": [
+		{
+			"displayName": "Bullet Pooling System",
+			"description": "DI-based bullet manager",
+			"path": "Samples/BulletPoolingSystem"
+		}
+	]
+}
