@@ -50,8 +50,6 @@ For behaviours that want to use DI to get references, the easiest way is with an
 using Obsidize.DependencyInjection;
 using UnityEngine;
 
-// Note that only one Inject / InjectionListener attribute should be used per type.
-// Otherwise, you will register multiple listeners on this class for the same value type.
 public class Consumer : MonoBehaviour
 {
 	
