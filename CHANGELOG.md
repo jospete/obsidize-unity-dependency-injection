@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Add new concept: InjectionTokenSourceModuleContext (token source prefab feature grouping, lazy token source instantiation)
+
 ## 1.1.2
 
 - Documentation updates
