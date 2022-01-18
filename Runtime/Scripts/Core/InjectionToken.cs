@@ -7,7 +7,7 @@ namespace Obsidize.DependencyInjection
 	/// Tokens can be disposed of by either the injector or the provider.
 	/// </summary>
 	/// <typeparam name="T">The value type that this token supplies</typeparam>
-	public class InjectionToken<T> : IDisposable
+	public class InjectionToken<T> : IDisposable, ITokenTypeRef
 		where T : class
 	{
 
@@ -15,7 +15,7 @@ namespace Obsidize.DependencyInjection
 		private readonly Func<T> _tokenFactory;
 
 		public T Value => _tokenFactory.Invoke();
-		public Type Type => typeof(T);
+		public Type TokenType => typeof(T);
 
 		public InjectionToken(Func<T> tokenFactory)
 		{
@@ -34,7 +34,7 @@ namespace Obsidize.DependencyInjection
 
 		public override string ToString()
 		{
-			return $"InjectionToken<{Type.Name}> {Value}";
+			return $"InjectionToken<{TokenType.Name}> {Value}";
 		}
 	}
 }

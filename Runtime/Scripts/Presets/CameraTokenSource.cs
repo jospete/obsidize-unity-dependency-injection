@@ -6,6 +6,7 @@ namespace Obsidize.DependencyInjection
 	/// Stub for a camera token provided in the scene.
 	/// </summary>
 	[DisallowMultipleComponent]
+	[RequireComponent(typeof(Camera))]
 	public class CameraTokenSource : SiblingComponentInjectionTokenSource<Camera>
 	{
 	}

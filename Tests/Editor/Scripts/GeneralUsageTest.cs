@@ -50,7 +50,7 @@ namespace Obsidize.DependencyInjection.Testing.Editor
 			TestTokenValue capturedValue = null;
 
 			Assert.AreEqual(false, injector.HasToken);
-			Assert.AreEqual(injector.TokenType, providedToken.Type);
+			Assert.AreEqual(injector.TokenType, providedToken.TokenType);
 			Assert.AreEqual(providedTokenValue, providedToken.Value);
 
 			injector.AddListener(injected => capturedValue = injected);

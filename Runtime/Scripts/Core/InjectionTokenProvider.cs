@@ -9,7 +9,7 @@ namespace Obsidize.DependencyInjection
 	/// as long as each token is disposed of before a new one is provided.
 	/// </summary>
 	/// <typeparam name="T">The type of token that will be provided</typeparam>
-	public class InjectionTokenProvider<T> : IInjectionTokenProvider, IDisposable
+	public class InjectionTokenProvider<T> : IInjectionTokenProvider
 		where T : class
 	{
 
@@ -17,9 +17,11 @@ namespace Obsidize.DependencyInjection
 		private InjectionToken<T> _token;
 
 		public event Action<IInjectionTokenProvider> OnDispose;
+		public event Action<IInjectionTokenProvider> OnTokenRequest;
 
 		public Type TokenType => typeof(T);
 		public bool HasToken => _token != null;
+		public bool HasTokenListeners => ListenerCount > 0;
 		public int ListenerCount => OnProvision?.GetInvocationList()?.Length ?? 0;
 		public T TokenValue => _token?.Value ?? default;
 
@@ -59,10 +61,14 @@ namespace Obsidize.DependencyInjection
 
 		public void Dispose()
 		{
+
 			OnDispose?.Invoke(this);
+
 			DisposeCurrentToken();
+
 			OnProvision = null;
 			OnDispose = null;
+			OnTokenRequest = null;
 		}
 
 		public void RemoveListener(Action<T> listener)
@@ -82,12 +88,16 @@ namespace Obsidize.DependencyInjection
 				return;
 			}
 
+			OnProvision += listener;
+
 			if (HasToken)
 			{
 				listener.Invoke(_token.Value);
 			}
-
-			OnProvision += listener;
+			else
+			{
+				OnTokenRequest?.Invoke(this);
+			}
 		}
 
 		public bool Provide(InjectionToken<T> token)

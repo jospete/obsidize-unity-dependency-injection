@@ -37,7 +37,9 @@ namespace Obsidize.DependencyInjection
 			}
 
 			_disposed = true;
+
 			Clear();
+
 			OnProviderAdd = null;
 			OnProviderRemove = null;
 		}

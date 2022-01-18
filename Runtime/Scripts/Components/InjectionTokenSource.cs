@@ -6,13 +6,15 @@ namespace Obsidize.DependencyInjection
 	/// Base class for Monobehaviours that want to provide a token to the DI system.
 	/// </summary>
 	/// <typeparam name="T">The type of token that will be provided by this behaviour</typeparam>
-	public abstract class InjectionTokenSource<T> : MonoBehaviour
+	public abstract class InjectionTokenSource<T> : MonoBehaviour, IInjectionTokenSource
 		where T : class
 	{
 
+		public System.Type TokenType => typeof(T);
+		public IInjectionTokenProvider Provider => TargetProvider;
 		protected virtual bool DestroyOnProvisionFailure => true;
 		protected virtual bool LogProvisioningLifeCylce => false;
-		protected InjectionTokenProvider<T> Provider => Injector.Main.GetProvider<T>();
+		protected virtual InjectionTokenProvider<T> TargetProvider => Injector.Main.GetProvider<T>();
 
 		protected virtual T GetInjectionTokenValue() => this as T;
 
@@ -52,14 +54,14 @@ namespace Obsidize.DependencyInjection
 
 		protected void DisposeInjectionToken()
 		{
-			Provider.DisposeCurrentToken();
+			TargetProvider.DisposeCurrentToken();
 		}
 
 		protected void ProvideInjectionToken()
 		{
 
 			var token = new InjectionToken<T>(GetInjectionTokenValue);
-			var provisioned = Provider.Provide(token);
+			var provisioned = TargetProvider.Provide(token);
 
 			if (provisioned)
 			{

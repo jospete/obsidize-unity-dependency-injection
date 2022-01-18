@@ -1,8 +1,10 @@
 {
-    "name": "BulletPoolingExample.BulletSystem",
+    "name": "BulletPoolingExample.Globals",
     "rootNamespace": "",
     "references": [
         "GUID:eb9240514652cb446ad36ce71e1ca6f5",
+        "GUID:090d523ef61e8f043b2182ce89f338b1",
+        "GUID:37fb13e1a35aa8e478a20f9981b8b70a",
         "GUID:83762f0be2431324596a0be1995de667"
     ],
     "includePlatforms": [],
@@ -10,7 +12,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

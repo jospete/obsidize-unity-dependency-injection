@@ -5,9 +5,8 @@ namespace Obsidize.DependencyInjection
 	/// <summary>
 	/// Baseline for maintaining a collection of watchers.
 	/// </summary>
-	public interface IInjectionTokenWatcher
+	public interface IInjectionTokenWatcher : ITokenTypeRef
 	{
-		Type TokenType { get; }
 		void Watch();
 		void Unwatch();
 	}
