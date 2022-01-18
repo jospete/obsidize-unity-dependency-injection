@@ -136,3 +136,52 @@ public class PlayerHealthProvider : SiblingComponentInjectionTokenSource<PlayerH
 {
 }
 ```
+
+### (Advanced) Token Source Module Usage
+
+Token source modules are best used for cases where the same set of token sources are required across multiple scenes.
+
+A token source module will take in one or more prefabs of ```InjectionTokenSource<T>``` components via the ```Provide()``` method,
+and instantiate the prefab when the DI system detects a request for that specific token type.
+
+**NOTE:** - Do not glob all of your token source prefabs into one giant module script - nothing will be instantiated this way.
+At least _one_ DI consumer must be active in the current scene to send requests to the DI system, which will trigger
+prefab instantiation.
+
+```csharp
+using Obsidize.DependencyInjection;
+using UnityEngine;
+
+[DisallowMultipleComponent]
+public class FeatureInjectionModule : MonoBehaviour
+{
+	
+	private InjectionTokenSourceModuleContext _moduleContext;
+	
+	// NOTE: all provided items must inherit from InjectionTokenSource<T>
+	[SerializeField] private BulletPool _bulletPoolPrefab;
+	[SerializeField] private Player _playerPrefab;
+	[SerializeField] private ModalDialog _modalDialogPrefab;
+	
+	private void Awake()
+	{
+		// NOTE: Prefabs are lazily instantiated, and will not be spawned
+		// unless they are explicitly asked for via some DI consumer
+		// ( such as BehaviourInjectionContext.Inject<T>() ).
+		//
+		// NOTE: At least one injection context must be active in the scene to start
+		// this "chain reaction" of instantiation - if nothing asks the DI system for
+		// a token, nothing will be instantiated.
+		_moduleContext = new InjectionTokenSourceModuleContext()
+			.Provide(_bulletPoolPrefab)
+			.Provide(_playerPrefab)
+			.Provide(_modalDialogPrefab);
+	}
+	
+	private void OnDestroy()
+	{
+		// Be sure to clean up resources when this module is done
+		_moduleContext.Dispose();
+	}
+}
+```
