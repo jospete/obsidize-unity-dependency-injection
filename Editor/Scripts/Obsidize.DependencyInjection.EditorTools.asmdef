@@ -1,16 +1,17 @@
 {
-    "name": "BulletPoolingExample.BulletSystem",
+    "name": "Obsidize.DependencyInjection.EditorTools",
     "rootNamespace": "",
     "references": [
-        "GUID:eb9240514652cb446ad36ce71e1ca6f5",
-        "GUID:83762f0be2431324596a0be1995de667"
+        "GUID:eb9240514652cb446ad36ce71e1ca6f5"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

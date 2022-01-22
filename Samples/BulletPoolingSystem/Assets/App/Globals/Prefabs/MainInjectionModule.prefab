@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb2d1b3595714145af1fb4461d6b45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPoolPrefab: {fileID: 5555932889737566133, guid: 1a615204f80e5424c8f0dcd4ecd3a824, type: 3}
-  playerPrefab: {fileID: 4294124308710794616, guid: 7506f8a49b85ec54595c61a8404f506e, type: 3}
+  _bulletPoolPrefab: {fileID: 5555932889737566133, guid: 1a615204f80e5424c8f0dcd4ecd3a824, type: 3}
+  _playerPrefab: {fileID: 4294124308710794616, guid: 7506f8a49b85ec54595c61a8404f506e, type: 3}

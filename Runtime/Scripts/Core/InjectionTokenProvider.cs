@@ -18,16 +18,19 @@ namespace Obsidize.DependencyInjection
 
 		public event Action<IInjectionTokenProvider> OnDispose;
 		public event Action<IInjectionTokenProvider> OnTokenRequest;
+		public event Action<IInjectionTokenProvider> OnTokenChange;
 
 		public Type TokenType => typeof(T);
 		public bool HasToken => _token != null;
 		public bool HasTokenListeners => ListenerCount > 0;
 		public int ListenerCount => OnProvision?.GetInvocationList()?.Length ?? 0;
 		public T TokenValue => _token?.Value ?? default;
+		public object DynamicTokenValue => TokenValue;
 
 		private void HandleTokenDispose()
 		{
 			_token = null;
+			OnTokenChange?.Invoke(this);
 		}
 
 		public override string ToString()
@@ -69,6 +72,7 @@ namespace Obsidize.DependencyInjection
 			OnProvision = null;
 			OnDispose = null;
 			OnTokenRequest = null;
+			OnTokenChange = null;
 		}
 
 		public void RemoveListener(Action<T> listener)
@@ -114,6 +118,7 @@ namespace Obsidize.DependencyInjection
 				_token = token;
 				_token.OnDispose += HandleTokenDispose;
 				OnProvision?.Invoke(_token.Value);
+				OnTokenChange?.Invoke(this);
 
 				return true;
 			}

@@ -15,6 +15,7 @@ namespace Obsidize.DependencyInjection
 		private readonly Dictionary<Type, IInjectionTokenProvider> _providers = new Dictionary<Type, IInjectionTokenProvider>();
 		private bool _disposed = false;
 
+		public IReadOnlyCollection<IInjectionTokenProvider> Providers => _providers.Values;
 		public bool Contains(IInjectionTokenProvider injector) => injector != null && _providers.ContainsKey(injector.TokenType);
 		public bool TryGetProvider(Type type, out IInjectionTokenProvider provider) => _providers.TryGetValue(type, out provider);
 
@@ -52,7 +53,7 @@ namespace Obsidize.DependencyInjection
 				return;
 			}
 
-			foreach (var provider in _providers.Values)
+			foreach (var provider in Providers)
 			{
 				if (provider == null) continue;
 				provider.OnDispose -= Remove;

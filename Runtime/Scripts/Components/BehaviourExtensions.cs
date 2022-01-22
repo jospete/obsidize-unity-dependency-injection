@@ -31,11 +31,12 @@ namespace Obsidize.DependencyInjection
 		) where T : class
 		{
 			return behaviour.StartCoroutine(
-				RequireInjectionTokenAsync(injector, callback, maxWaitTimeSeconds)
+				RequireInjectionTokenAsync(behaviour, injector, callback, maxWaitTimeSeconds)
 			);
 		}
 
 		public static IEnumerator RequireInjectionTokenAsync<T>(
+			this MonoBehaviour behaviour,
 			Injector injector,
 			RequireCallback<T> callback,
 			float maxWaitTimeSeconds
@@ -61,7 +62,7 @@ namespace Obsidize.DependencyInjection
 			if (timeout)
 			{
 				Debug.LogWarning(
-					$"{typeof(T).Name} token is required in the current scene" +
+					$"{typeof(T).Name} token is required by {behaviour} in the current scene" +
 					$", but none was provided after {maxWaitTimeSeconds} seconds"
 				);
 			}
