@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.0
+
+- Remove example assemblies to prevent them from showing up in consumer projects
+- Add Token Inspector editor window utility to allow for better source tracing
+- Add behaviour source to injection requirement log for better source tracing
+
 ## 1.2.0
 
 - Add new concept: InjectionTokenSourceModuleContext (token source prefab feature grouping, lazy token source instantiation)
