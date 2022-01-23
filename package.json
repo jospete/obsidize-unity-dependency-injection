@@ -1,6 +1,6 @@
 {
 	"name": "com.obsidize.unity.dependency-injection",
-	"version": "1.3.1",
+	"version": "1.3.2",
 	"displayName": "Dependency Injection",
 	"description": "Utilities for enhanced unity app control flow via DI tokens",
 	"unity": "2019.4",

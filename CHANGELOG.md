@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.3.2
+
+- Remove unnecessary Scenes folder from source control
+- Refactor DI token inspector to have more flexibility for long token names
+
 ## 1.3.1
 
 - Fix import warnings from sample scripts
