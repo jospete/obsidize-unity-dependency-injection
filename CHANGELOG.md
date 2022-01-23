@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.1
+
+- Fix import warnings from sample scripts
+- Update injection token editor window to be more generally extendable
+- Add better test coverage
+
 ## 1.3.0
 
 - Remove example assemblies to prevent them from showing up in consumer projects
