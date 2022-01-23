@@ -16,19 +16,19 @@ namespace Obsidize.DependencyInjection.EditorTools
 			return GetWindow<InjectionTokenInspectorEditorWindow>("DI Token Inspector");
 		}
 
-		private static bool IsUnityObjectType(Type type)
+		protected static bool IsUnityObjectType(Type type)
 		{
 			return type != null && (type.IsAssignableFrom(_unityObjectType) || type.IsSubclassOf(_unityObjectType));
 		}
 
-		private static bool IsUnityObject(object value)
+		protected static bool IsUnityObject(object value)
 		{
 			return value != null && IsUnityObjectType(value.GetType());
 		}
 
-		protected Injector TargetInjector => Injector.Main;
+		protected virtual Injector TargetInjector => Injector.Main;
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			TargetInjector.Registry.OnProviderAdd += HandleProviderAdd;
 			TargetInjector.Registry.OnProviderRemove += HandleProviderRemove;
@@ -39,7 +39,7 @@ namespace Obsidize.DependencyInjection.EditorTools
 			}
 		}
 
-		private void OnDestroy()
+		protected virtual void OnDestroy()
 		{
 			TargetInjector.Registry.OnProviderAdd -= HandleProviderAdd;
 			TargetInjector.Registry.OnProviderRemove -= HandleProviderRemove;
@@ -67,7 +67,7 @@ namespace Obsidize.DependencyInjection.EditorTools
 			Repaint();
 		}
 
-		private void OnGUI()
+		protected virtual void OnGUI()
 		{
 
 			var providers = TargetInjector.Registry.Providers;
@@ -86,7 +86,7 @@ namespace Obsidize.DependencyInjection.EditorTools
 			}
 		}
 
-		private void RenderProviderState(IInjectionTokenProvider provider)
+		protected virtual void RenderProviderState(IInjectionTokenProvider provider)
 		{
 
 			if (provider == null)
