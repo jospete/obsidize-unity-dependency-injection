@@ -12,6 +12,7 @@ namespace Obsidize.DependencyInjection
 	{
 
 		public static bool VerboseInstantiations { get; set; } = false;
+		public static Func<Component, Component> OnInstantiate = UnityEngine.Object.Instantiate;
 
 		private readonly IInjectionTokenProvider _provider;
 		private readonly Component _instantiationTarget;
@@ -101,7 +102,7 @@ namespace Obsidize.DependencyInjection
 				return;
 			}
 
-			var result = UnityEngine.Object.Instantiate(_instantiationTarget);
+			var result = OnInstantiate?.Invoke(_instantiationTarget);
 
 			if (VerboseInstantiations)
 			{

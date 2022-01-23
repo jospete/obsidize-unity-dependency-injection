@@ -60,5 +60,13 @@ namespace Obsidize.DependencyInjection.Testing.Editor
 			injector.GetProvider<MockToken>().ProvideWithOverwrite(new InjectionToken<MockToken>(tokenValue2));
 			Assert.AreEqual(tokenValue, _ref);
 		}
+
+		[Test]
+		public void CanBeDisposed()
+		{
+			var injector = new Injector();
+			injector.Dispose();
+			Assert.DoesNotThrow(() => injector.Dispose());
+		}
 	}
 }

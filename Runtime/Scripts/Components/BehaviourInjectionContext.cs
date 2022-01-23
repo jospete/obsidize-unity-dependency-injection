@@ -14,7 +14,8 @@ namespace Obsidize.DependencyInjection
 		private readonly Dictionary<Type, IInjectionTokenWatcher> _watchers = new Dictionary<Type, IInjectionTokenWatcher>();
 		private readonly Injector _injector;
 		private readonly MonoBehaviour _consumer;
-		private readonly float _defaultMaxWaitTime;
+
+		public float DefaultMaxWaitTime { get; set; }
 
 		public BehaviourInjectionContext(
 			Injector injector,
@@ -24,7 +25,7 @@ namespace Obsidize.DependencyInjection
 		{
 			_injector = injector ?? throw new ArgumentNullException(nameof(injector));
 			_consumer = consumer ?? throw new ArgumentNullException(nameof(consumer));
-			_defaultMaxWaitTime = defaultMaxWaitTime;
+			DefaultMaxWaitTime = defaultMaxWaitTime;
 		}
 
 		public BehaviourInjectionContext(MonoBehaviour consumer, float defaultMaxWaitTime)
@@ -44,7 +45,7 @@ namespace Obsidize.DependencyInjection
 
 		public BehaviourInjectionContext Inject<T>(Action<T> listener) where T : class
 		{
-			return Inject(listener, _defaultMaxWaitTime);
+			return Inject(listener, DefaultMaxWaitTime);
 		}
 
 		public BehaviourInjectionContext Inject<T>(

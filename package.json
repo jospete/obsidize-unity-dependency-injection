@@ -23,11 +23,19 @@
 		"injection",
 		"di"
 	],
+	"files": [
+		"*.md",
+		"*.meta",
+		"*.asmdef",
+		"Samples~",
+		"Runtime",
+		"Editor"
+	],
 	"samples": [
 		{
 			"displayName": "Bullet Pooling System",
 			"description": "DI-based bullet manager",
-			"path": "Samples/BulletPoolingSystem"
+			"path": "Samples~/BulletPoolingSystem"
 		}
 	]
 }
