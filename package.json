@@ -23,14 +23,6 @@
 		"injection",
 		"di"
 	],
-	"files": [
-		"*.md",
-		"*.meta",
-		"*.asmdef",
-		"Samples~",
-		"Runtime",
-		"Editor"
-	],
 	"samples": [
 		{
 			"displayName": "Bullet Pooling System",

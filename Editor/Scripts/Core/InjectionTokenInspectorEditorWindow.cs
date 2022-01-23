@@ -80,10 +80,19 @@ namespace Obsidize.DependencyInjection.EditorTools
 
 			EditorGUILayout.LabelField("Active Providers", EditorStyles.boldLabel);
 
+			var previousLabelWidth = EditorGUIUtility.labelWidth;
+			var previousEnabledState = GUI.enabled;
+
+			EditorGUIUtility.labelWidth = Mathf.Max(175f, position.width / 3f);
+			GUI.enabled = false;
+
 			foreach (var provider in providers)
 			{
 				RenderProviderState(provider);
 			}
+
+			EditorGUIUtility.labelWidth = previousLabelWidth;
+			GUI.enabled = previousEnabledState;
 		}
 
 		protected virtual void RenderProviderState(IInjectionTokenProvider provider)
@@ -94,9 +103,6 @@ namespace Obsidize.DependencyInjection.EditorTools
 				EditorGUILayout.LabelField("Missing provider reference");
 				return;
 			}
-
-			var previousEnabledState = GUI.enabled;
-			GUI.enabled = false;
 
 			var tokenValue = provider.DynamicTokenValue;
 			var tokenType = provider.TokenType;
@@ -114,8 +120,6 @@ namespace Obsidize.DependencyInjection.EditorTools
 			{
 				EditorGUILayout.TextField(label, "(No token assigned)");
 			}
-
-			GUI.enabled = previousEnabledState;
 		}
 	}
 }
